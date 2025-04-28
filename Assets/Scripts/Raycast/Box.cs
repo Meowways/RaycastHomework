@@ -1,16 +1,26 @@
 using UnityEngine;
 
-public class Box : MonoBehaviour, IMovable
+public class Box : MonoBehaviour, IGrabble, IMovable
 {
-    // Start is called before the first frame update
-    void Start()
+    private Rigidbody _rigidbody;
+
+    private void Awake()
     {
-        
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnGrab()
     {
-        
+        _rigidbody.isKinematic = true;
+    }
+
+    public void OnRelease()
+    {
+        _rigidbody.isKinematic = false;
+    }
+
+    public void ProcessingIncomingForce(float incomingForce, Vector3 directionForce)
+    {
+        _rigidbody.AddForce(directionForce * incomingForce, ForceMode.Impulse);
     }
 }

@@ -5,8 +5,15 @@ public class Player : MonoBehaviour
     private const int LeftMouseButton = 0;
     private const int RightMouseButton = 1;
 
-    [SerializeField] private Handle _handle;
-    [SerializeField] private Shooter _shooter;
+    [SerializeField] private LayerMask _groundLayerMask;
+
+    private DragService _dragService;
+    private IShoot _shooter;
+
+    private void Awake()
+    {
+        _dragService = new DragService(_groundLayerMask);
+    }
 
     private void Update()
     {
@@ -14,11 +21,17 @@ public class Player : MonoBehaviour
         {
             Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            _handle.TakeObject(cameraRay.origin, cameraRay.direction);
+            _dragService.TakeObject(cameraRay.origin, cameraRay.direction);
+        }
+
+        if (_dragService.IsGrabbedObject())
+        {
+            Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            _dragService.HoldObject(cameraRay.origin, cameraRay.direction);
         }
 
         if (Input.GetMouseButtonUp(LeftMouseButton))
-            _handle.DropObject();
+            _dragService.DropObject();
 
         if (Input.GetMouseButtonDown(RightMouseButton))
         {
@@ -27,4 +40,6 @@ public class Player : MonoBehaviour
             _shooter.Shoot(cameraRay.origin, cameraRay.direction);
         }
     }
+
+    public void SetShooter(IShoot shooter) => _shooter = shooter;
 }

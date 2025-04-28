@@ -485,7 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 1435884776}
-  _timeToChangeDirection: 5
+  _timeToChangeDirection: 10
 --- !u!1 &520650178
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +754,7 @@ MonoBehaviour:
   _sail: {fileID: 1070133366}
   _windDirection: {fileID: 418299448}
   _maxSpeed: 10
-  _sailRotateSpeed: 10
+  _sailRotateSpeed: 30
   _shipRotateSpeed: 10
   _maxDegrees: 90
 --- !u!4 &970760285
